@@ -29,9 +29,3 @@ Outputs:
   IPLocatorApi:
     Description: "API Gateway endpoint URL for Prod stage for IPLocator function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ip-locator/"
-  IPLocatorFunction:
-    Description: "IPLocator Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  IPLocatorIamRole:
-    Description: "Implicit IAM Role created for IPLocator function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
