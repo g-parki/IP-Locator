@@ -43,11 +43,17 @@ const init_map = (lat, lon) => {
       
 }
 
-$(document).ready(function() {
+const request_ip = (ip) => {
+    let url = 'https://rwzr72akp3.execute-api.us-west-2.amazonaws.com/Prod/ip-locator?asjson=1'
+    if (typeof(ip) == 'string') {
+        url = url + `&ip=${ip}`
+    }
+
     $.ajax({
-        url: 'https://rwzr72akp3.execute-api.us-west-2.amazonaws.com/Prod/ip-locator?asjson=1',
+        url: url,
         type: 'GET',
         success: function(response) {
+            $('#ip-locator-demo').empty()
             if (typeof(response) == 'string') {
                 render_ip(JSON.parse(response))
             } else {
@@ -59,4 +65,14 @@ $(document).ready(function() {
             console.log(error);
         }
     });
+}
+
+const submit_form = (form) => {
+    const ip = form.elements['ip'].value
+    request_ip(ip)
+}
+
+$(document).ready(function() {
+    request_ip()
 })
+

@@ -15,18 +15,31 @@
           <div class="huge-text">IP-Locator</div>
       </div>
       <div id="map-container">
-        <div id="map"></div>
-        <div id="ip-locator-demo"></div>
-      </div>
-      <div class="mt-5">
-        <div class="huge-text">What's This?</div>
-        <p>
-          This site is using an AWS Lambda API as an intermediary between you and <a href="https://ip-api.com/">ip-api.com</a>.<br>
-          The Lambda function captures your IP address, gets details from <em>ip-api</em>, then serves the info back the format requested. This API can gather 
-          info for any valid IP address, and can provide either a JSON response or a simplified HTML response. See the <a href="https://github.com/g-parki/IP-Locator">respository</a> 
-          for full details.
-        </p>
-    </div>
+        <div id="map" class="rounded centered"></div>
+        <div id="ip-locator-demo" class="rounded centered"></div>
+
+        <div class="input-bar" style="width: 90%; margin:20px;">
+          <div class="input-bar-item">
+            <form action="javascript:;" onsubmit="submit_form(this)">
+               <div class="input-group">
+                  <input class="form-control" type="text" name="ip" placeholder="12.34.56.789">
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">Look Up</button>
+                  </span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <div class="huge-text">What's This?</div>
+          <p>
+            This site is using an AWS Lambda API as an intermediary between you and <a href="https://ip-api.com/">ip-api.com</a>.<br>
+            The Lambda function captures your IP address, gets details from <em>ip-api</em>, then serves the info back the format requested. This API can gather 
+            info for any valid IP address, and can provide either a JSON response or a simplified HTML response. See the <a href="https://github.com/g-parki/IP-Locator">respository</a> 
+            for full details.
+          </p>
+        </div>
     </div>
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light fixed-bottom">
       <div class="container-fluid">
@@ -52,6 +65,8 @@
     </nav>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <script src="assets/js/scripts.js"></script>
   </body>
 </html>

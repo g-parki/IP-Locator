@@ -9,10 +9,6 @@
 
 #ip-locator-demo {
     border: 2px solid rgb(0, 165, 138);
-    width: 90%;
-    border-radius: 10px;
-    margin: 20px;
-    margin-bottom: 100px;
     padding: 15px;
     text-align: left;
     font-size: small;
@@ -21,7 +17,14 @@
   
 #map {
     height: 500px;
-    width: 90%;
+
+}
+
+.rounded {
     border-radius: 10px;
+}
+
+.centered {
+    width: 90%;
     margin: 20px;
 }
