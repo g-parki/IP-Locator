@@ -1,12 +1,21 @@
 import json
 import requests
 
-FIELDS = {
+FIELDS_ALIAS = {
     'country': 'country',
     'city': 'city',
     'zip': 'zip',
     'lat': 'latitude',
     'lon': 'longitude',
+    'region': 'region',
+    'regionName': 'regionName',
+    'isp': 'isp',
+}
+
+headers = {
+    "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": True,
 }
 
 def lambda_handler(event, context):
@@ -30,6 +39,7 @@ def lambda_handler(event, context):
         print(e)
         return {
             "statusCode": 200,
+            "headers": headers,
             "body": {
                 "message": "Cannot connect to ip-api.com",
                 "error": e,
@@ -39,24 +49,27 @@ def lambda_handler(event, context):
     if ip_info.get("status") == "fail":
         return {
             "statusCode": 200,
+            "headers": headers,
             "body": json.dumps(ip_info),
         }
 
     if props['as_json'] == "1":
-        response = {FIELDS.get(key): ip_info.get(key) for key in FIELDS.keys()}
+        response = {FIELDS_ALIAS.get(key): ip_info.get(key) for key in FIELDS_ALIAS.keys()}
         response['ip'] = props["ip"]
         return {
             "statusCode": 200,
+            "headers": headers,
             "body": json.dumps(response),
         }
     else:
-        field_string = lambda field: f"<p>{FIELDS.get(field).upper()}: {ip_info.get(field)}</p>"
+        field_string = lambda field: f"<p>{FIELDS_ALIAS.get(field).upper()}: {ip_info.get(field)}</p>"
         response = (
             f"<h2>YOUR IP IS: {props['ip']}</h2>" +
-            "".join([field_string(field) for field in FIELDS.keys()])
+            "".join([field_string(field) for field in FIELDS_ALIAS.keys()])
         )
+        headers["Content-Type"] = "text/html; charset=utf-8"
         return {
             "statusCode": 200,
-            "headers": {"Content-Type": "text/html; charset=utf-8"},
+            "headers": headers,
             "body": response,
         }

@@ -1,5 +1,5 @@
 # IP-Locator
-AWS Lambda API to provide information of an IP address. By default, this uses the your own IP address, though it can also accept any valid public IP address.
+AWS Lambda API to provide information of an IP address. By default, this uses the your own IP address, though it can also accept any valid public IP address. All data comes from [IP-API](https://ip-api.com)
 
 # API Documentation
 
@@ -13,3 +13,19 @@ AWS Lambda API to provide information of an IP address. By default, this uses th
 | `ip`        | Look up info for an IP other than your own | Any valid IP address | Your IP   |
 
 Example: `https://rwzr72akp3.execute-api.us-west-2.amazonaws.com/Prod/ip-locator?asjson=1&ip=84.17.46.160`
+
+### Response
+``` json
+{   
+    "country": "Netherlands",
+    "city": "Amsterdam",
+    "zip": "1012",
+    "latitude": 52.3759,
+    "longitude": 4.8975,
+    "region": "NH",
+    "regionName": "North Holland",
+    "isp": "DataCamp Limited",
+    "ip": "84.17.46.160"
+}
+```
+
