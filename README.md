@@ -1,5 +1,5 @@
 # IP-Locator
-AWS Lambda API to provide information of an IP address. By default, this uses the your own IP address, though it can also accept any valid public IP address. All data comes from [IP-API](https://ip-api.com)
+AWS Lambda API to provide information of an IP address. By default, this uses the your own IP address, though it can also accept any valid public IP address. All data comes from [IP-API](https://ip-api.com). Check out the [demo site.](https://gregp.dev/IP-Locator/)
 
 # API Documentation
 
