@@ -17,11 +17,9 @@ const render_line = (title, data) => {
     `<span style="float:left;padding-right: 4px;"><b>${title}: </b></span>${data}</p>`
 }
 
-const init_map = (lat, lon) => {
-    const script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC8EGp1Go1VHdXdMf8J_1jZD4Hr9YC9ePw&callback=initMap';
-    script.async = true;
+let maps_loaded = false
 
+const init_map = (lat, lon) => {
     window.initMap = () => {
         const coords = {lat: lat, lng: lon}
         const map = new google.maps.Map(document.getElementById('map'), {
@@ -39,13 +37,18 @@ const init_map = (lat, lon) => {
           });
     };
 
-    document.head.appendChild(script);
-      
+    if (!maps_loaded) {
+        const script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC8EGp1Go1VHdXdMf8J_1jZD4Hr9YC9ePw&callback=initMap';
+        script.async = true;
+        document.head.appendChild(script);
+        maps_loaded = true;
+    }
 }
 
 const request_ip = (ip) => {
     let url = 'https://rwzr72akp3.execute-api.us-west-2.amazonaws.com/Prod/ip-locator?asjson=1'
-    if (typeof(ip) == 'string') {
+    if (ip !== undefined) {
         url = url + `&ip=${ip}`
     }
 
@@ -68,11 +71,46 @@ const request_ip = (ip) => {
 }
 
 const submit_form = (form) => {
-    const ip = form.elements['ip'].value
-    request_ip(ip)
+    const val = $('#ip-input').val()
+    request_ip(val)
+}
+
+const is_valid_ip = (ipaddress) => {  
+    return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)     
+}
+
+const render_ip_input = () => {
+    const val = $('#ip-input').val()
+    if (val == "" || !is_valid_ip(val)) {
+        disable_form()
+    } else {
+        enable_form()
+    }
+}
+
+const enable_form = () => {
+    if ($('#submit-button').hasClass('disabled')) {
+        $('#submit-button').removeClass('disabled')
+        $('#submit-button').on('click', submit_form)
+        $('#ip-input').on('keyup', function(event) {
+            if (event.keyCode === 13) {
+                submit_form()
+            }
+        })
+    }
+}
+
+const disable_form = () => {
+    if (!$('#submit-button').hasClass('disabled')) {
+        $('#submit-button').addClass('disabled')
+        $('#ip-input').off('keyup')
+        $('#submit-button').off()
+    }
 }
 
 $(document).ready(function() {
     request_ip()
+    console.log($('#ip-input').val())
+    $('#ip-input').on('input', render_ip_input)
 })
 
